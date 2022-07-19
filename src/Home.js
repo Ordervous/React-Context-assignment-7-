@@ -7,50 +7,27 @@ import UserContext from "./UserContext";
 
 function Home() {
 
-    let { user, SignOut } = useContext(UserContext)
-    let { username } = user
-    // console.log(user)
-
-    // if (user === undefined) {
-    //     return (
-    //         <Nav className="me-auto">
-    //         <Link to="/sign-in" className="nav-link justify-content-end">Sign In</Link>
-    //         </Nav>
-    //     )
-    // }
-
+    let { username, signOut } = useContext(UserContext)
+ 
     function authLink() {
-       return (
-            <UserContext.Consumer>
-                {
-                    function () {
 
-                        return (
-                            <>
-                                {
-                                    ({user}) !== "" ?
+        if (username) {
 
-                                        (<Nav className="me-auto">
-                                            <Link to="/sign-in" className="nav-link justify-content-end">Sign In</Link>
-                                        </Nav>)
-                                        :
-                                        (<>
-                                            <Nav className="me-auto">
-                                                <Navbar.Text>
-                                                    Signed in as: <a href="/sign-in">{user.username}</a>
-                                                </Navbar.Text>
-                                                <Link to="/" className="nav-link justify-content-end" onClick={{ SignOut }}>Sign Out</Link>
-                                            </Nav>
-                                        </>)
-                                }
-                            </>
-                        )
-                    } 
-                }
-            </UserContext.Consumer>
-        )
+            return <Nav className="me-auto">
+                <Navbar.Text>
+                    Signed in as: <a href="/sign-in">{username}</a>
+                </Navbar.Text>
+                <Link to="/" className="nav-link justify-content-end" onClick={{ signOut }}>Sign Out</Link>
+            </Nav>
+
+        } else {
+
+            return <Nav className="me-auto">
+                <Link to="/sign-in" className="nav-link justify-content-end">Sign In</Link>
+            </Nav>
+
+        }
     }
-
 
     return (
         <>
@@ -68,10 +45,7 @@ function Home() {
                 <Outlet />
             </Stack>
         </>
-
     )
-
-
 }
 
 export default Home

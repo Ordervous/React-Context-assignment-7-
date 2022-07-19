@@ -8,39 +8,37 @@ import UserContext from './UserContext'
 function App() {
 
   let [user, setUser] = useState({
-    username: '',
-    // SignIn: '',
-    // SignOut: '',
+    username: null,
+    signIn: SignIn,
+    signOut: SignOut,
   })
 
-  let { username } = user
-  console.log(user)
+  function SignIn(credentials) {
 
-  function SignIn() {
-    setUser({user}) 
+    setUser(user => ({
+      ...user,
+      username: credentials.username
+    }))
 
-      // (user) ? (SignIn{usersname}) : (SignOut())  
-      // activate signout button
-      //activate name of person 
-    
-}
 
-function SignOut() {
-  user = ""
-}
+  }
 
-return (
-  <UserContext.Provider value={{ user, SignIn, SignOut }}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />}>
-          <Route index element={<Welcome value={{user}}/>} />
-          <Route path="sign-in" element={<SignInForm handleSubmit={SignIn} />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </UserContext.Provider>
-);
+  function SignOut() {
+    user = ""
+  }
+
+  return (
+    <UserContext.Provider value={user}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route index element={<Welcome value={{ user }} />} />
+            <Route path="sign-in" element={<SignInForm handleSubmit={SignIn} />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserContext.Provider>
+  );
 }
 
 export default App;

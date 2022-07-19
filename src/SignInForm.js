@@ -11,15 +11,15 @@ function SignInForm() {
         password: ""
     })
 
-
     let navigate = useNavigate()
-    let { SignIn } = useContext(UserContext)
+    let { signIn } = useContext(UserContext)
 
     function handleSubmit(event) {
-        console.log(credentials)
         event.preventDefault();
+        console.log(credentials)
+  
         navigate('/')
-        SignIn({credentials})
+        signIn(credentials)
 
     }
 
